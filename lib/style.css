@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+body {
+    background: url(back.png);
+	margin: 0px;
+	padding: 8px 8px 12px 8px; /* top right bottom left */
+	font-family: sans-serif, sans-serif;
+	font-size: 100%;
+}
+
+div#main {
+	margin: 0px auto 0px auto;
+	width: 720px;
+}
+
+@media screen and (max-width: 760px) {
+	div#main {
+		width: 100%;
+	}
+}
+
+div#main>h1, div#main>h2, div#main>h3 {
+	margin: 8px 8px 8px 8px;
+	padding: 4px;
+	border: solid #c0c0c0;
+	border-width: 8px 1px 1px 2px;
+}
+
+p {
+	margin: 8px 8px 8px 28px;
+	padding: 4px;
+}
+
+ul {
+	margin-left: 12px;
+}
+
+li {
+	word-break: break-all;
+}
+
+div#footer {
+	margin: 20px 0px 8px 0px;
+	border: dashed gray;
+	border-width: 1px 0px 0px 0px;
+	text-align: right;
+}
+
+.multicol span {
+	float: left;
+	width: var(--w);
+}
