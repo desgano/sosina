@@ -22,6 +22,17 @@ Module: style.css
 
 #comments li.comment-admin strong.comment-name { font-size:140% }
 
-#widget-searchbox form {
-	text-align: center;
+#widget-searchbox {
+	text-align: left;
+}
+#widget-searchbox input[type=text] {
+	width: 120px;
+}
+@media (max-width: 719px) {
+	#widget-searchbox {
+		text-align: center;
+	}
+}
+#body-container {
+	max-width: 900px;
 }
