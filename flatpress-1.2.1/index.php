@@ -216,7 +216,7 @@
 			
 	}
 
-	
+	date_default_timezone_set('Asia/Tokyo');
 	system_init();
 	index_display();
 	
