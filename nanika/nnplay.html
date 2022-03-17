@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="../lib/style.css">
+<title>nnplay v0.10</title>
+</head>
+
+<body>
+<div id="main">
+
+<h1>■nnplay v0.10</h1>
+
+<p>
+NicoNicoPlayer、略してnnplay。<br>
+Webページ上でニコニコ動画を視聴するJavaScript製ツールです。
+</p>
+
+<h2>●実行サンプル</h2>
+
+<p>
+<a href="https://www.nicovideo.jp/user/155256/mylist/14063456">ノベマス短編</a> by ハリアーP
+</p>
+
+<!-- ★ nnplay スタイル： サイズやマージン等は適当に調整を -->
+<style>
+div#nico_area {
+    width:480px;
+    height:270px;
+    border:none;
+    background:gray;
+    margin-left:32px;
+}
+select#nico_id {
+    width:480px;
+}
+</style>
+
+<!-- ★ nnplay 動画表示エリア -->
+<div id="nico_area">
+</div>
+
+<!-- ★ nnplay 動画選択リスト -->
+<p>
+<select id="nico_id" oninput="show_video();">
+<option value="sm7685242">【ノベマス】不機嫌りっちゃん【短編】</option>
+<option value="sm7709818">【ノベマス】アイドル最速は誰なのか!?【短編】</option>
+<option value="sm7789447">【ノベマス】貴音の休日【短編】</option>
+<option value="sm7812243">【ノベマス】Born to be iDOL【短編】</option>
+<option value="sm7914948">【ノベマス】雪歩の一人暮らし【短編】</option>
+<option value="sm7965203">【ノベマス】とぅるばってて、ちぶる足りねぇな【短編】</option>
+<option value="sm8043241">【ノベマス】そして彼女は最初のステージへ【短編】</option>
+<option value="sm8078876">【ノベマス】765プロはドッジも強い・前編【短編】</option>
+<option value="sm8107320">【ノベマス】765プロはドッジも強い・中編【短編】</option>
+<option value="sm8132350">【ノベマス】765プロはドッジも強い・後編【短編】</option>
+<option value="sm8163173">【ノベマス】なぜ私は悪魔に出会ったか？【短編】</option>
+<option value="sm8183631">【ノベマス】監獄☆ロック【短編】</option>
+<option value="sm8208739">【ノベマス】The FUSHIME【短編？】</option>
+<option value="sm8435782">【ノベマス】ラーメン765へようこそ！【短編】</option>
+<option value="sm8463527">【ノベマス】765 JUSTICE【短編】</option>
+<option value="sm8482776">【ノベマス】876プロはバスケが弱い・前編【短編】</option>
+<option value="sm8503847">【ノベマス】876プロはバスケが弱い・後編【短編】</option>
+<option value="sm8573338">【ノベマス】765プロの焼肉はスゴイ・前編【短編】</option>
+<option value="sm8590536">【ノベマス】765プロの焼肉はスゴイ・後編【短編】</option>
+<option value="sm9125624">【ノベマス】　怪　談・前　編　【短編】</option>
+<option value="sm9125675">【ノベマス】　怪　談・後　編　【短編】</option>
+<option value="sm9241162">【ノベマス】Welcome to Underground【短編】</option>
+<option value="sm9278119">【ノベマス】765プロの正月は激しい【短編】</option>
+<option value="sm9326890">【ノベマス】脳内・ノスタルジック・円舞曲【短編】</option>
+<option value="sm9378271">【ノベマス】765プロとの料理は甘い・前編【短編】</option>
+<option value="sm9394338">【ノベマス】765プロとの料理は甘い・後編【短編】</option>
+<option value="sm9621006">【ノベマス】　ひ　ゃ　く　【短編？】</option>
+<option value="sm9693305">【ノベマス】765プロの事務員はソリティアーナ【短編】</option>
+<option value="sm9957348">【ノベマス】アイドル・ストーク４月号【短編】</option>
+<option value="sm9989543">【ノベマス】765プロ１のイケメン☆アイドルはマジパねぇ【短編】</option>
+<option value="sm10257030">【ノベマス】あの日 できなかった 思い出【短編】</option>
+<option value="sm10314864">【ノベマス】はるの おとずれ【短編】</option>
+<option value="sm10429594">【ノベマス】876プロのアイドルは私が守る【短編】</option>
+<option value="sm10570621">【ノベマス】尾崎さんが見たシュールな何か【短編】</option>
+<option value="sm10620098">【ノベマス】テレフォン・パスワード【前編】</option>
+<option value="sm10620317">【ノベマス】テレフォン・パスワード【中編】</option>
+<option value="sm10630465">【ノベマス】テレフォン・パスワード【後編】</option>
+<option value="sm10687645">【ノベマス】876プロの会議は続く【短編】</option>
+<option value="sm10863657">【ノベマス】765プロのスキヤキは刹那の閃光【短編】</option>
+<option value="sm10988840">【ノベマス】何故か この時期に やよたん話【短編】</option>
+<option value="sm11124038">【ノベマス】手抜き150【短編？】</option>
+<option value="sm11276849">【ノベマス】ＨＤＤブチ壊れ記念【短編】</option>
+<option value="sm11319237">【ノベマス】がんばれ！ 秋月プロ・前編【短編】</option>
+<option value="sm11350594">【ノベマス】がんばれ！ 秋月プロ・中編【短編】</option>
+<option value="sm11397658">【ノベマス】２人は未来に生きてんな【短編】</option>
+<option value="sm11430821">【ノベマス】がんばれ！ 秋月プロ・後編【短編】</option>
+<option value="sm11493763">【ノベマス】華麗なる文壇上のアイドル【短編】</option>
+<option value="sm11582130">【ノベマス】凄まじいまでに普通の日常【短編】</option>
+<option value="sm11598745">【ノベマス】大人の紙芝居【短編】</option>
+<option value="sm11630488">【ノベマス】光の届く遠い彼方へ【短編】</option>
+<option value="sm11689452">【ノベマス】Snow &amp; Fairy【短編】</option>
+<option value="sm11738232">【ノベマス】美希センパイとの合宿の夜【短編】</option>
+<option value="sm11807376">【ノベマス】千早の一人暮らし【短編】</option>
+<option value="sm11880362">【ノベマス】まるで問題なくいつも通り【短編】</option>
+<option value="sm11980916">【ノベマス】武器よさらば【短編】</option>
+<option value="sm12137451">【ノベマス】初秋の休日【短編】</option>
+<option value="sm12148360">【ノベマス】クイズ・如月千早の３００の事【短編】</option>
+<option value="sm12171865">【ノベマス】クイズ・日高 愛の３００の事【短編】</option>
+<option value="sm12183194">【ノベマス】クイズ・四条貴音の３００の事【短編】</option>
+<option value="sm12204281">【ノベマス】クイズ・音無小鳥の３００の事【短編】</option>
+<option value="sm12259405">【ノベマス】止まった時計と存在グラフ【短編】</option>
+<option value="sm12278168">【ノベマス】クイズ・星井美希の300の事【短編】</option>
+<option value="sm12333612">【ノベマス】クイズ・秋月律子の300の事？【短編】</option>
+<option value="sm12399592">【ノベマス】Cat's Catfight【短編】</option>
+<option value="sm12419494">【ノベマス】屋上物語【短編】</option>
+<option value="sm12535859">【ノベマス】休憩室物語【短編】</option>
+<option value="sm12557373">【ノベマス】貴音の日記【短編】</option>
+<option value="sm12675686">【ノベマス】７６５プロの写真撮影はテンション高い【短編】</option>
+<option value="sm12753078">【ノベマス】停雲落月【短編】</option>
+<option value="sm12877897">【ノベマス】魔界のうりうり合戦【短編】</option>
+<option value="sm13013510">【ノベマス】抽象的な休日【短編】</option>
+<option value="sm13081920">【ノベマス】クイズ・双海亜美の300の事【短編】</option>
+<option value="sm13156880">【ノベマス】嵐の後の静けさ【短編】</option>
+<option value="sm13208483">【ノベマス】初めてアイフェスに出る夢子【短編】</option>
+<option value="sm13255805">【ノベマス】ぷりんぷりんはるるん【短編】</option>
+<option value="sm13317524">【ノベマス】魔界のボウリング合戦【短編】</option>
+<option value="sm13399628">【ノベマス】四条貴音の『鐘響韻・陰陽問答』【短編】</option>
+<option value="sm13571214">【ノベマス】クイズ・高槻やよいの300の事【短編】</option>
+<option value="sm13586874">【ノベマス】　二　百　【短編？】</option>
+<option value="sm13660598">【ノベマス】恐るべきアイドル業界を斬る！【短編】</option>
+<option value="sm13913234">【ノベマス】料理の巨人 ～アイドル集まれ♪～【前編】</option>
+<option value="sm14047632">【ノベマス】料理の巨人 ～がんばれ！ やよいちゃん～【後編】</option>
+<option value="sm14336047">【ノベマス】魔界のむぐむぐ合戦？【短編】</option>
+<option value="sm14357280">【ノベマス】スーパースター【短編】</option>
+<option value="sm14594978">【ノベマス】ギルティ・ルーム【前編】</option>
+<option value="sm14660882">【ノベマス】ギルティ・ルーム【中編】</option>
+<option value="sm14719655">【ノベマス】ギルティ・ルーム【後編】</option>
+<option value="sm14755508">【ノベマス】クイズ・萩原雪歩の300の事【短編】</option>
+<option value="sm14857275">【ノベマス】Dahlia in the GoldenSnow【短編】</option>
+<option value="sm14980861">【ノベマス】クイズ・岡本まなみの300の事【短編】</option>
+<option value="sm15108880">【ノベマス】千早と伊織【短編】</option>
+<option value="sm15381476">【ノベマス】765プロのPVは越える【前編】</option>
+<option value="sm15506763">【ノベマス】765プロのPVは越える【中編】</option>
+<option value="sm15581114">【ノベマス】765プロのPVは越える【後編】</option>
+<option value="sm15839387">【ノベマス】ヤバさ超特急 ～弾丸の如くヤバくパネェ～【前編】</option>
+<option value="sm15904018">【ノベマス】ヤバさ超特急 ～死電区間の如く交わらぬ宿命～【後編】</option>
+<option value="sm16226677">【ノベマス】小早川瑞樹の「インタビューなんだからね！」【短編】</option>
+<option value="sm16396131">【ノベマス】アイドル大運動会 ～その一言は地獄～【短編】</option>
+<option value="sm16645994">【ノベマス】１→２【短編】</option>
+<option value="sm16800240">【ノベマス】Ｍ２【短編】</option>
+<option value="sm16878475">【ノベマス】世界的に有名なノリ【短編】</option>
+<option value="sm17387749">【ノベマス】クイズ・秋月 涼の300の事【短編】</option>
+<option value="sm17440063">【ノベマス】そこでは未来が見えている【短編】</option>
+<option value="sm17495538">【ノベマス】涙ナシでは届かぬ世界【短編】</option>
+<option value="sm17559649">【ノベマス】どちらかといえば【短編】</option>
+<option value="sm17644026">【ノベマス】個室ひかりに入るが如く【短編】</option>
+<option value="sm17720681">【ノベマス】六道輪廻を遍く天運【前編】</option>
+<option value="sm17738315">【ノベマス】六道輪廻を遍く天運【後編】</option>
+<option value="sm17789730">【ノベマス】やたら静かに六道輪廻を遍く【短編】</option>
+<option value="sm17870300">【ノベマス】Ringing　～ GoldenSnowの高鳴り ～【短編】</option>
+<option value="sm17903072">【ノベマス】十六夜日記のノネット【短編】</option>
+<option value="sm17930589">【ノベマス】　２　５　０　【短編？】</option>
+<option value="sm17981027">【ノベマス】クイズ・三浦あずさの300の事【短編】</option>
+<option value="sm18026641">【ノベマス】ハイ！  チーズ！【短編】</option>
+<option value="sm18121942">【ノベマス】ポエムしりとり【短編】</option>
+<option value="sm18173000">【ノベマス】焼肉物語【短編】</option>
+<option value="sm18290660">【ノベマス】しにくり頂上決戦【短編】</option>
+<option value="sm18357560">【ノベマス】魔界の気づかい合戦【短編】</option>
+<option value="sm18417265">【ノベマス】指輪物語 ～メガネと狂気と時々変態～【短編】</option>
+<option value="sm18522977">【ノベマス】１４１－６９＝？【短編】</option>
+<option value="sm18599646">【ノベマス】王子と姫【短編】</option>
+<option value="sm18825597">【ノベマス】クイズ・水谷絵理の300の事【短編】</option>
+<option value="sm18952030">【ノベマス】マシンガン・ペイント【短編】</option>
+<option value="sm19059588">【ノベマス】その１日のはじまり【短編】</option>
+<option value="sm19226918">【ノベマス】クイズ・我那覇 響の300の事【短編】</option>
+<option value="sm19265884">【ノベマス】小早川瑞樹の「インタビューなんだからね！」その2【短編】</option>
+<option value="sm19513834">【ノベマス】夜の友【短編】</option>
+<option value="sm19746988">【ノベマス】花の妖精【短編】</option>
+<option value="sm19868678">【ノベマス】Kingdom Scramble【前編】</option>
+<option value="sm19907802">【ノベマス】Kingdom Scramble【後編】</option>
+<option value="sm20046208">【ノベマス】新人アイドルとプロデューサー【短編】</option>
+<option value="sm20273525">【ノベマス】魔界の罪滅ぼし合戦【短編】</option>
+<option value="sm20668043">【ノベマス】 心　理　戦 【短編】</option>
+<option value="sm20743428">【ノベマス】警部補・三浦さん【短編】</option>
+<option value="sm20845281">【ノベマス】何故か この時期に りつたん話【短編】</option>
+<option value="sm21076428">【ノベマス】みかんみかんいおりん【短編】</option>
+<option value="sm21302701">【ノベマス】クイズ・東豪寺 麗華の300の事【短編】</option>
+<option value="sm21739374">【ノベマス】第１回・アイドル生討論【短編】</option>
+<option value="sm21775590">【ノベマス】絶対どっちか選んでね！ ～伊織編～【短編】</option>
+<option value="sm21830991">【ノベマス】クイズ・菊地 真の300の事【短編】</option>
+<option value="sm22113965">【ノベマス】美希の休日【短編】</option>
+<option value="sm22131325">【ノベマス】「おなかいっぱい」と言わせろ企画【短編】</option>
+<option value="sm22171627">【ノベマス】The Garden of Loneliness【短編】</option>
+<option value="sm22723791">【ノベマス】真に感謝イメチェン企画【短編】</option>
+<option value="sm23032771">【ノベマス】クイズ・三条ともみの300の事【短編】</option>
+<option value="sm24331194">【ノベマス】ちはやみき（○月○日放送分）【短編】</option>
+<option value="sm24970312">【ノベマス】魔界のお料理合戦【短編】</option>
+<option value="sm25300848">【ノベマス】新春・甘酒攻め 耐久観察まつり【短編】</option>
+<option value="sm27870819">【ノベマス】セントラル・ガーデン【短編】</option>
+<option value="sm29044654">【ノベマス】阿鼻叫喚通り商店街【短編】</option>
+<option value="sm34926241">【ノベマス】混戦のオーケストラ【短編】</option>
+</select>
+</p>
+
+<!-- ★ nnplay [戻る]と[進む]ボタン -->
+<p>
+<button id="go_prev" onclick="move(-1);">前に戻る</button>
+<button id="go_next" onclick="move(1);">次に進む</button>
+</p>
+
+<!-- ★ nnplay スクリプト -->
+<script>
+function show_video() {
+    const script = document.createElement('script');
+    script.src = "https://embed.nicovideo.jp/watch/" + nico_id.value
+             　+ "/script?w=480&h=270";  // w=幅&h=高さ
+    while (nico_area.firstChild) {
+        nico_area.removeChild(nico_area.firstChild);
+    }
+    nico_area.appendChild(script);
+    localStorage.setItem("nico_last_id", nico_id.value);
+}
+function go_next() {
+    const id = localStorage.getItem("nico_last_id");
+    const ar = Array.from(nico_id.options);
+    nico_id.selectedIndex = (ar.findIndex(e => e.value == id) + 1) % ar.length;
+}
+function move(offset) {
+    const len = nico_id.options.length;
+    nico_id.selectedIndex = (nico_id.selectedIndex + len + offset) % len;
+    show_video();
+}
+go_next();
+show_video();
+</script>
+
+<!-- ★ nnplay ここまで -->
+
+<h2>●使い方</h2>
+
+<ul>
+<li>ドロップダウンリストでタイトルを選択すると動画を表示します。</li>
+<li>動画の[▶]ボタンで再生を始めます。自動化できないか改善の余地あり。
+<li>[前に戻る][次に進む]ボタンで、動画リスト内を移動できます。</li>
+<li>最後に見た動画番号を記録し、次回はその続きを表示します。</li>
+</ul>
+
+<ul>
+<li>動画リストはHTMLの&lt;select&gt;要素内にハードコーディングします。</li>
+<li>この動画リストは別のツール「<a href="./nnlist.html">nnlist</a>」で作成できます。</li>
+</ul>
+
+<h2>●ソース置き場</h2>
+
+<ul>
+<li>GitHub <a href="https://github.com/desgano/sosina/tree/nnplay_v0.10">https://github.com/desgano/sosina/tree/nnplay_v0.10</a>
+</ul>
+<p>注： 「nnplay」と「nnlist」が同梱してあります。</p>
+
+
+<div id="footer">
+</div>
+
+<p style="height:100px;">
+</p>
+
+</div>
+</body>
+</html>
