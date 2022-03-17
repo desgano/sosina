@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="../lib/style.css">
+<title>nnlist v0.10</title>
+</head>
+
+<body>
+<div id="main">
+
+<h1>■nnlist v0.10</h1>
+
+<p>
+NicoNicoLister、略してnnlist。<br>
+ニコ動マイリストから<a href="./nnplay.html">NicoNicoPlayer</a>用の動画リストを作るツールです。<br>
+</p>
+
+<h2>●実行サンプル</h2>
+
+<!-- ★ nnlist スタイル： サイズやマージン等は適当に調整を -->
+<style>
+textarea#nico_result {
+	width: 480px;
+	height: 200px;
+	font-size: 9pt;
+}
+</style>
+
+<!-- ★ nnlist 結果表示エリア -->
+<p>
+<textarea id="nico_result"></textarea>
+</p>
+
+<!-- ★ nnlist 入力エリア -->
+<p>
+ニコ動マイリスト番号：
+<input id="nico_id">
+<button id="btn_get" type="button" onclick="get_result();">データ作成</button>
+<button id="btn_copy" type="button" onclick="copy_result();">コピー</button>
+</p>
+
+<!-- ★ nnlist スクリプト -->
+<script>
+function get_result()
+{
+	const match = nico_id.value.match(/mylist\/(\d+)/);
+	if (!match) {
+		nico_result.value = "マイリスト番号は「mylist/数字」で指定してください。";
+	}
+	else {
+		nico_result.value = "";
+		nico_id.value = "";
+		fetch("./nnlist.php?id=" + match[1])
+			.then(responce => responce.text())
+			.then(text => { nico_result.value = text; })
+			.catch(ex => { nico_result.value = ex.message; });
+	}
+}
+function copy_result()
+{
+	if (location.protocol != "https:") {
+		alert("クリップボードが利用できるのはSSL接続環境のみです。");
+	}
+	else {
+		navigator.clipboard.writeText(nico_result.value)
+			.then(() => alert("クリップボードにコピーしました"))
+			.catch(ex => alert(ex.message));
+	}
+}
+nico_result.value = "";
+nico_id.value = "";
+</script>
+
+<!-- ★ nnlist ここまで -->
+
+<h2>●使い方</h2>
+
+<ul>
+<li>ニコニコ動画のマイリスト番号を入力し「データ作成」を押してください。
+<li>「コピー」を押すと、結果をクリップボードにコピーします。
+</ul>
+<ul>
+<li>マイリスト番号は「mylist/数字」を含む文字列で指定してください。
+<li>マイリストのURLを別ウィンドウからドラッグ＆ドロップするのが簡単です。
+</ul>
+<ul>
+<li>「シリーズ」形式の動画リストは、RSSが取得できないので未対応です。
+</ul>
+
+<div id="footer">
+</div>
+
+<p style="height:100px;">
+</p>
+
+</div>
+</body>
+</html>
