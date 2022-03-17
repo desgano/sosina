@@ -8,8 +8,7 @@
 		// D l day
 		
 		if ( strpos($format, '%a') !== false ) {
-			$i = strftime('%w', $timestamp);
-			$format = str_replace('%a', $lang['date']['weekday_abbr'][$i], $format);
+			$format = str_replace('%a', '%%a', $format);
 		}
 		
 		if ( strpos($format, '%A') !== false  ) {
@@ -45,8 +44,12 @@
 				$format = str_replace($_win_from, $_win_to, $format);
 			}
 		
-		return strftime($format, $timestamp);
-	
+		$result = strftime($format, $timestamp);
+		if ( strpos($result, '%a') !== false ) {
+			$i = strftime('%w', $timestamp);
+			$result = str_replace('%a', $lang['date']['weekday_abbr'][$i], $result);
+		}
+		return $result;
 		
 	}
 
