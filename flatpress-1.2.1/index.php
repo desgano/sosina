@@ -173,7 +173,7 @@
 							break;
 						case 'rss2':
 						default:
-							header('Content-type: application/rss+xml');
+							header('Content-type: application/rss+xml; charset=utf-8');
 							$module = SHARED_TPLS . 'rss.tpl';
 					}
 					
