@@ -15,7 +15,7 @@ function get_result()
 
     // HTTPステータスが200でなければエラーとみなす
     $stat = $http_response_header[0];
-    $code = preg_replace('/^\S+\s+(.*)/', '$1', $stat);
+    $code = preg_replace('/^\S+\s+/', '', $stat);
     if (intval($code) != 200)
         return "Error: mylist/{$id}: {$code}";
 
@@ -31,13 +31,14 @@ function get_result()
     $creator = @($rss->channel->xpath("//dc:creator")[0]);
     $result = "<!-- mylist/{$id} 「{$title}」 by {$creator} -->\n";
 
-    // 「動画番号=>"[sm動画番号, 動画タイトル],"」の連想配列を作る
+    // guid => "<option value=\"動画ID\">タイトル</option>" の連想配列
     $arr = [];
     foreach ($rss->channel->item as $item) {
-        $vid = preg_replace('|^.*/sm(\d+)\?.*$|', '$1', $item->link);
-        $arr[$vid] = "<option value=\"sm{$vid}\">{$item->title}</option>\n";
+        $vid = preg_replace('|^.*/watch/(\w*\d+).*$|', '$1', $item->link);
+        $guid = preg_replace('|^.*/watch/(\d+)$|', '$1', $item->guid);
+        $arr[$guid] = "<option value=\"{$vid}\">{$item->title}</option>\n";
     }
-    // キー(動画番号)順にソートした値を結合する
+    // キー(guid)順にソートした値を結合する
     ksort($arr, SORT_NUMERIC);
     $result .= implode("", array_values($arr));
 
