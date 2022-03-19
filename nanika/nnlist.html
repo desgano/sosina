@@ -23,9 +23,9 @@ NicoNicoLister、略してnnlist。<br>
 <!-- ★ nnlist スタイル： サイズやマージン等は適当に調整を -->
 <style>
 textarea#nico_result {
-	width: 480px;
-	height: 200px;
-	font-size: 9pt;
+    width: 480px;
+    height: 200px;
+    font-size: 9pt;
 }
 </style>
 
@@ -46,29 +46,29 @@ textarea#nico_result {
 <script>
 function get_result()
 {
-	const match = nico_id.value.match(/mylist\/(\d+)/);
-	if (!match) {
-		nico_result.value = "マイリスト番号は「mylist/数字」で指定してください。";
-	}
-	else {
-		nico_result.value = "";
-		nico_id.value = "";
-		fetch("./nnlist.php?id=" + match[1])
-			.then(responce => responce.text())
-			.then(text => { nico_result.value = text; })
-			.catch(ex => { nico_result.value = ex.message; });
-	}
+    const match = nico_id.value.match(/mylist\/(\d+)/);
+    if (!match) {
+        nico_result.value = "マイリスト番号は「mylist/数字」で指定してください。";
+    }
+    else {
+        nico_result.value = "";
+        nico_id.value = "";
+        fetch("./nnlist.php?id=" + match[1])
+            .then(responce => responce.text())
+            .then(text => { nico_result.value = text; })
+            .catch(ex => { nico_result.value = ex.message; });
+    }
 }
 function copy_result()
 {
-	if (location.protocol != "https:") {
-		alert("クリップボードが利用できるのはSSL接続環境のみです。");
-	}
-	else {
-		navigator.clipboard.writeText(nico_result.value)
-			.then(() => alert("クリップボードにコピーしました"))
-			.catch(ex => alert(ex.message));
-	}
+    if (location.protocol != "https:") {
+        alert("クリップボードが利用できるのはSSL接続環境のみです。");
+    }
+    else {
+        navigator.clipboard.writeText(nico_result.value)
+            .then(() => alert("クリップボードにコピーしました"))
+            .catch(ex => alert(ex.message));
+    }
 }
 nico_result.value = "";
 nico_id.value = "";
